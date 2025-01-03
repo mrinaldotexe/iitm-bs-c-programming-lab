@@ -17,9 +17,11 @@
  * - grade: char
  *
  */
-typedef struct student
-{
-
+typedef struct student {
+    char name[50];
+    char rollno[20];
+    int marks;
+    char grade;
 } student_t;
 
 // Implment the below functions in the student.c

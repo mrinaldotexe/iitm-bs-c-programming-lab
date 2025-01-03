@@ -23,7 +23,7 @@
  */
 void print_student(student_t* s)
 {
-    printf(...);
+    printf("%s (%s) got grade %c with %d marks.\n", s->name, s->rollno, s->grade, s->marks);
 }
 
 // Task 3: Implement the compute_grade_function
@@ -44,6 +44,13 @@ void print_student(student_t* s)
  */
 char compute_grade(student_t *s)
 {
+    if (s->marks >= 90) return 'S';
+    else if (s->marks >= 80) return 'A';
+    else if (s->marks >= 70) return 'B';
+    else if (s->marks >= 60) return 'C';
+    else if (s->marks >= 50) return 'D';
+    else if (s->marks >= 40) return 'E';
+    else return 'U';
 }
 
 // Task 4: Fill the ... parts in the get_student_data_from_csv function
@@ -58,20 +65,22 @@ int get_student_data_from_csv(char *filename, student_t *students)
     // Uncomment the below and fill the necessary parts.
 
     // Get the number of lines in the file
-    // int num = file_get_n_lines(...);
+    int num = file_get_n_lines(filename);
 
     // Dynamically allocate space for the students.
-    // students = malloc(...);
+    students = malloc(num * sizeof(student_t));
 
     // Open a file for reading
-    // FILE *fp = fopen(filename, "r");
-    // char buf[MAX_STRING];
+    FILE *fp = fopen(filename, "r");
+    char buf[MAX_STRING];
     
-    // while (fgets(buf, MAX_STRING, fp) != NULL)
-    // {
-    //     student_t *s = &students[num];
-    //     sscanf(buf, "%[^,],%[^,],%d", &(s->name), &(s->rollno), &(s->marks));
-    //     compute_grade(s);
-    // }
-    // return num;
+    while (fgets(buf, MAX_STRING, fp) != NULL)
+    {
+        student_t *s = &students[num];
+        sscanf(buf, "%[^,],%[^,],%d", &(s->name), &(s->rollno), &(s->marks));
+        compute_grade(s);
+        num++;
+    }
+    fclose(fp);
+    return num;
 }
